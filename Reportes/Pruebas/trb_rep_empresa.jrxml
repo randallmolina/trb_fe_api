@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="trb_factura_base" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a17b7ce3-88d8-496d-80a0-1f6253859f8a">
+	<property name="template.type" value="columnar"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="P_EMPRESA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[15]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT id_empresa  , razon_social  ,
+       (select ti.descripcion   from trb_tipos_iden_emp_v ti
+	      where ti.id_empresa =  e.id_empresa
+	       and  ti.tipo_iden= e.tipo_identificacion)  || ': '|| Num_identificacion  Identificacion  ,
+       trbf_desc_geo(  id_provincia  ,  id_canton  , id_distrito  , id_barrio) ubica_geo  , otras_senas   ,
+       case
+	when num_fax is not null then
+               'Telefono: '|| cod_pais_telefono  ||'-'|| num_telefono ||'   Fax: '|| cod_pais_fax ||'-'|| num_fax
+         Else
+             'Telefono: '|| cod_pais_telefono  ||'-'|| num_telefono
+       end   telefono ,
+       'Correo: '||correo_electronico correo ,
+      empresa  , nombre_comercial,
+     (select  encode(imagen, 'base64')   as imagen_code
+        FROM  trb_imagenes i
+       where i.id_empresa = e.id_empresa
+         and upper(clase_imagen)='LOGO' ) as imagen
+FROM  trb_empresas e where id_empresa = $P{P_EMPRESA}]]>
+	</queryString>
+	<field name="id_empresa" class="java.lang.Integer"/>
+	<field name="razon_social" class="java.lang.String"/>
+	<field name="identificacion" class="java.lang.String"/>
+	<field name="ubica_geo" class="java.lang.String"/>
+	<field name="otras_senas" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="correo" class="java.lang.String"/>
+	<field name="empresa" class="java.lang.String"/>
+	<field name="nombre_comercial" class="java.lang.String"/>
+	<field name="imagen" class="java.lang.String"/>
+	<title>
+		<band height="94" splitType="Stretch">
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="94" y="1" width="461" height="23" uuid="6877f32d-8e92-4f34-92e0-94b8f8b675f0"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razon_social}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="96" y="25" width="191" height="12" uuid="5cb66d27-9a6d-4739-b140-38d9dafeb959"/>
+				<textElement>
+					<font size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="36" width="193" height="12" uuid="ba0cbd37-4db5-48a3-b1d9-382c5be8cc9f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="48" width="191" height="12" uuid="a3cebf15-a16f-4386-acdc-52b0becd4aba"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{correo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="61" width="456" height="12" uuid="70b35882-4eed-45c8-bd16-a638d9746fe6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{otras_senas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="73" width="456" height="12" uuid="420e76c8-8b74-4380-a5ee-91225e6ead1e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ubica_geo}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" isUsingCache="true" onErrorType="Icon">
+				<reportElement x="4" y="4" width="89" height="81" uuid="2b6b41e1-8725-4f43-9f02-cb03b1acbfe9"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(new SimpleJasperReportsContext()).loadAwtImageFromBytes(javax.xml.bind.DatatypeConverter.parseBase64Binary($F{imagen}))]]></imageExpression>
+			</image>
+		</band>
+	</title>
+</jasperReport>

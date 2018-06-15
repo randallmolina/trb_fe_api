@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="trb_factura_base_enca" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="699676f2-1356-4640-827d-e10018f01c6a">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_EMPRESA" class="java.lang.Integer"/>
+	<parameter name="P_ID_DOCUMENTO" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT e.id_documento,   e.cod_tipo_doc_emp,
+       trbf_desc_tipo_comp (e.tipo_comprobante) desc_tipo_comprobante, e.no_documento_refe,
+       e.fecha_envio, e.clavenumerica, e.numeroconsecutivo, e.fechaemision,
+	   e.cod_cliente,
+	   e.id_receptor,  c.razon_social nombre_cliente,
+	   trbf_desc_geo(  c.id_provincia  ,  c.id_canton  , c.id_distrito  , c.id_barrio) ubica_geo_cliente,
+	   c.otras_senas,
+	   case
+	     when c.num_fax is not null then
+               'Telefono: '|| c.cod_pais_telefono  ||'-'|| c.num_telefono ||'   Fax: '|| c.cod_pais_fax ||'-'|| c.num_fax
+	     when c.num_telefono is not null then ''
+         Else
+              'Telefono: '|| c.cod_pais_telefono  ||'-'|| c.num_telefono
+       end   telefono ,
+	   e.condicionventa_emp,
+	   trbf_desc_condicionventa(e.condicionventa) desc_condicionventa, e.plazocredito,
+	   e.mediopago_emp,
+	   trbf_desc_mediopago(e.mediopago) desc_mediopago, e.codigomoneda_emp,
+	   trbf_desc_moneda(e.codigomoneda) desc_moneda,
+	   e.codsucursal_emp, e.numsucursal, e.punto_de_venta, e.numpuntoventa,
+	   e.tipocambio, e.totalservgravados, e.totalservexentos, e.totalmercanciasgravados, e.totalmercanciasexentos, e.totalgravado, e.totalexento,
+	   e.totalventa, e.totaldescuentos, e.totalventaneta, e.totalimpuestos, e.totalcomprobante,
+	   numeroresolucion, fecharesolucion, numero_documento_empre
+	FROM  trb_documentos_enc e LEFT JOIN trb_clientes c ON  e.id_receptor = c.id_cliente]]>
+	</queryString>
+	<field name="id_documento" class="java.lang.Integer"/>
+	<field name="cod_tipo_doc_emp" class="java.lang.String"/>
+	<field name="desc_tipo_comprobante" class="java.lang.String"/>
+	<field name="no_documento_refe" class="java.lang.String"/>
+	<field name="fecha_envio" class="java.sql.Timestamp"/>
+	<field name="clavenumerica" class="java.lang.String"/>
+	<field name="numeroconsecutivo" class="java.lang.String"/>
+	<field name="fechaemision" class="java.sql.Timestamp"/>
+	<field name="cod_cliente" class="java.lang.String"/>
+	<field name="id_receptor" class="java.lang.Integer"/>
+	<field name="nombre_cliente" class="java.lang.String"/>
+	<field name="ubica_geo_cliente" class="java.lang.String"/>
+	<field name="otras_senas" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="condicionventa_emp" class="java.lang.String"/>
+	<field name="desc_condicionventa" class="java.lang.String"/>
+	<field name="plazocredito" class="java.lang.Integer"/>
+	<field name="mediopago_emp" class="java.lang.String"/>
+	<field name="desc_mediopago" class="java.lang.String"/>
+	<field name="codigomoneda_emp" class="java.lang.String"/>
+	<field name="desc_moneda" class="java.lang.String"/>
+	<field name="codsucursal_emp" class="java.lang.String"/>
+	<field name="numsucursal" class="java.lang.Integer"/>
+	<field name="punto_de_venta" class="java.lang.String"/>
+	<field name="numpuntoventa" class="java.lang.Integer"/>
+	<field name="tipocambio" class="java.lang.Double"/>
+	<field name="totalservgravados" class="java.math.BigDecimal"/>
+	<field name="totalservexentos" class="java.math.BigDecimal"/>
+	<field name="totalmercanciasgravados" class="java.math.BigDecimal"/>
+	<field name="totalmercanciasexentos" class="java.math.BigDecimal"/>
+	<field name="totalgravado" class="java.math.BigDecimal"/>
+	<field name="totalexento" class="java.math.BigDecimal"/>
+	<field name="totalventa" class="java.math.BigDecimal"/>
+	<field name="totaldescuentos" class="java.math.BigDecimal"/>
+	<field name="totalventaneta" class="java.math.BigDecimal"/>
+	<field name="totalimpuestos" class="java.math.BigDecimal"/>
+	<field name="totalcomprobante" class="java.math.BigDecimal"/>
+	<field name="numeroresolucion" class="java.lang.String"/>
+	<field name="fecharesolucion" class="java.sql.Timestamp"/>
+	<field name="numero_documento_empre" class="java.math.BigDecimal"/>
+	<group name="id_documento">
+		<groupExpression><![CDATA[$F{id_documento}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50"/>
+	</title>
+	<detail>
+		<band height="109" splitType="Stretch">
+			<textField>
+				<reportElement x="71" y="0" width="314" height="20" uuid="969388ce-cc38-4117-8cde-e72090bb20b3"/>
+				<textFieldExpression><![CDATA[$F{nombre_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="0" width="52" height="20" uuid="4e899f07-2547-46fd-9346-9aa5a51a3663"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="71" y="42" width="395" height="20" uuid="c46f465a-d3fa-45eb-bff1-0061a98f2dac"/>
+				<textFieldExpression><![CDATA[$F{ubica_geo_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="22" width="52" height="20" uuid="6ed439e4-0616-4dec-b03d-1fb872f81a21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="71" y="21" width="395" height="20" uuid="3ccf7b4f-cf44-47cd-ac98-af4f1669cec1"/>
+				<textFieldExpression><![CDATA[$F{otras_senas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="71" y="62" width="100" height="20" uuid="6b7b37a7-7c42-42ce-b11c-e218747887a4"/>
+				<textFieldExpression><![CDATA[$F{clavenumerica}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="209" y="62" width="100" height="20" uuid="e6cce945-7b52-45b2-9b9a-bb192d2005e2"/>
+				<textFieldExpression><![CDATA[$F{id_documento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

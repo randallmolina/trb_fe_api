@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="trb_factura_base" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a17b7ce3-88d8-496d-80a0-1f6253859f8a">
+	<property name="template.type" value="columnar"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<subDataset name="Reg_enca_doc" uuid="c7e449ba-2fcd-43dd-816d-8fcd84608c36">
+		<parameter name="pid_documento" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[155]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT e.id_documento,   e.cod_tipo_doc_emp,
+       trbf_desc_tipo_comp (e.tipo_comprobante) desc_tipo_comprobante, e.no_documento_refe,
+       e.fecha_envio, e.clavenumerica, e.numeroconsecutivo, e.fechaemision,
+	   e.cod_cliente,
+	   e.id_receptor,  c.razon_social nombre_cliente,
+	   trbf_desc_geo(  c.id_provincia  ,  c.id_canton  , c.id_distrito  , c.id_barrio) ubica_geo_cliente,
+	   c.otras_senas,
+	   case
+	     when c.num_fax is not null then
+               'Telefono: '|| c.cod_pais_telefono  ||'-'|| c.num_telefono ||'   Fax: '|| c.cod_pais_fax ||'-'|| c.num_fax
+	     when c.num_telefono is not null then ''
+         Else
+              'Telefono: '|| c.cod_pais_telefono  ||'-'|| c.num_telefono
+       end   telefono ,
+	   e.condicionventa_emp,
+	   trbf_desc_condicionventa(e.condicionventa) desc_condicionventa, e.plazocredito,
+	   e.mediopago_emp,
+	   trbf_desc_mediopago(e.mediopago) desc_mediopago, e.codigomoneda_emp,
+	   trbf_desc_moneda(e.codigomoneda) desc_moneda,
+	   e.codsucursal_emp, e.numsucursal, e.punto_de_venta, e.numpuntoventa,
+	   e.tipocambio, e.totalservgravados, e.totalservexentos, e.totalmercanciasgravados, e.totalmercanciasexentos, e.totalgravado, e.totalexento,
+	   e.totalventa, e.totaldescuentos, e.totalventaneta, e.totalimpuestos, e.totalcomprobante,
+	   numeroresolucion, fecharesolucion, numero_documento_empre
+	FROM  trb_documentos_enc e LEFT JOIN trb_clientes c ON  e.id_receptor = c.id_cliente
+where e.id_documento = $P{pid_documento}]]>
+		</queryString>
+		<field name="id_documento" class="java.lang.Integer"/>
+		<field name="cod_tipo_doc_emp" class="java.lang.String"/>
+		<field name="desc_tipo_comprobante" class="java.lang.String"/>
+		<field name="no_documento_refe" class="java.lang.String"/>
+		<field name="fecha_envio" class="java.sql.Timestamp"/>
+		<field name="clavenumerica" class="java.lang.String"/>
+		<field name="numeroconsecutivo" class="java.lang.String"/>
+		<field name="fechaemision" class="java.sql.Timestamp"/>
+		<field name="cod_cliente" class="java.lang.String"/>
+		<field name="id_receptor" class="java.lang.Integer"/>
+		<field name="nombre_cliente" class="java.lang.String"/>
+		<field name="ubica_geo_cliente" class="java.lang.String"/>
+		<field name="otras_senas" class="java.lang.String"/>
+		<field name="telefono" class="java.lang.String"/>
+		<field name="condicionventa_emp" class="java.lang.String"/>
+		<field name="desc_condicionventa" class="java.lang.String"/>
+		<field name="plazocredito" class="java.lang.Integer"/>
+		<field name="mediopago_emp" class="java.lang.String"/>
+		<field name="desc_mediopago" class="java.lang.String"/>
+		<field name="codigomoneda_emp" class="java.lang.String"/>
+		<field name="desc_moneda" class="java.lang.String"/>
+		<field name="codsucursal_emp" class="java.lang.String"/>
+		<field name="numsucursal" class="java.lang.Integer"/>
+		<field name="punto_de_venta" class="java.lang.String"/>
+		<field name="numpuntoventa" class="java.lang.Integer"/>
+		<field name="tipocambio" class="java.lang.Double"/>
+		<field name="totalservgravados" class="java.math.BigDecimal"/>
+		<field name="totalservexentos" class="java.math.BigDecimal"/>
+		<field name="totalmercanciasgravados" class="java.math.BigDecimal"/>
+		<field name="totalmercanciasexentos" class="java.math.BigDecimal"/>
+		<field name="totalgravado" class="java.math.BigDecimal"/>
+		<field name="totalexento" class="java.math.BigDecimal"/>
+		<field name="totalventa" class="java.math.BigDecimal"/>
+		<field name="totaldescuentos" class="java.math.BigDecimal"/>
+		<field name="totalventaneta" class="java.math.BigDecimal"/>
+		<field name="totalimpuestos" class="java.math.BigDecimal"/>
+		<field name="totalcomprobante" class="java.math.BigDecimal"/>
+		<field name="numeroresolucion" class="java.lang.String"/>
+		<field name="fecharesolucion" class="java.sql.Timestamp"/>
+		<field name="numero_documento_empre" class="java.math.BigDecimal"/>
+		<group name="id_documento">
+			<groupExpression><![CDATA[$F{id_documento}]]></groupExpression>
+		</group>
+		<group name="clavenumerica">
+			<groupExpression><![CDATA[$F{clavenumerica}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="P_EMPRESA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[15]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Proyectos_App\\trb_fe_api\\Reportes\\definicion\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PID_DOCUMENTO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[155]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT id_empresa  , razon_social  ,
+       (select ti.descripcion   from trb_tipos_iden_emp_v ti
+	      where ti.id_empresa =  e.id_empresa
+	       and  ti.tipo_iden= e.tipo_identificacion)  || ': '|| Num_identificacion  Identificacion  ,
+       trbf_desc_geo(  id_provincia  ,  id_canton  , id_distrito  , id_barrio) ubica_geo  , otras_senas   ,
+       case
+	when num_fax is not null then
+               'Telefono: '|| cod_pais_telefono  ||'-'|| num_telefono ||'   Fax: '|| cod_pais_fax ||'-'|| num_fax
+         Else
+             'Telefono: '|| cod_pais_telefono  ||'-'|| num_telefono
+       end   telefono ,
+       'Correo: '||correo_electronico correo ,
+      empresa  , nombre_comercial,
+     (select  imagen  as imagen_code
+        FROM  trb_imagenes i
+       where i.id_empresa = e.id_empresa
+         and clase_imagen='logo' ) as imagen
+FROM  trb_empresas e where id_empresa = $P{P_EMPRESA}]]>
+	</queryString>
+	<field name="id_empresa" class="java.lang.Integer"/>
+	<field name="razon_social" class="java.lang.String"/>
+	<field name="identificacion" class="java.lang.String"/>
+	<field name="ubica_geo" class="java.lang.String"/>
+	<field name="otras_senas" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="correo" class="java.lang.String"/>
+	<field name="empresa" class="java.lang.String"/>
+	<field name="nombre_comercial" class="java.lang.String"/>
+	<field name="imagen" class="java.lang.Object"/>
+	<group name="Group2">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<elementGroup/>
+				<subreport>
+					<reportElement x="138" y="4" width="405" height="29" uuid="eb79a86c-0bcb-4881-ab48-555b6428f96d"/>
+					<dataSourceExpression><![CDATA[where e.id_documento = 155]]></dataSourceExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "trb_factura_base_enca.jasper"]]></subreportExpression>
+				</subreport>
+				<textField>
+					<reportElement x="4" y="4" width="100" height="20" uuid="be5cd53c-6248-4e37-8e76-c35a8bdb8ad3"/>
+					<textFieldExpression><![CDATA[$F{cod_cliente}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="113" splitType="Stretch">
+			<image>
+				<reportElement x="4" y="10" width="75" height="93" uuid="65fb803a-3202-4eca-8b1a-2f2259996257"/>
+			</image>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="94" y="3" width="461" height="23" uuid="6877f32d-8e92-4f34-92e0-94b8f8b675f0"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razon_social}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="96" y="27" width="191" height="14" uuid="5cb66d27-9a6d-4739-b140-38d9dafeb959"/>
+				<textElement>
+					<font size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="41" width="193" height="13" uuid="ba0cbd37-4db5-48a3-b1d9-382c5be8cc9f"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="55" width="191" height="14" uuid="a3cebf15-a16f-4386-acdc-52b0becd4aba"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{correo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="69" width="456" height="14" uuid="70b35882-4eed-45c8-bd16-a638d9746fe6"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{otras_senas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="83" width="456" height="14" uuid="420e76c8-8b74-4380-a5ee-91225e6ead1e"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ubica_geo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="53"/>
+	</detail>
+	<columnFooter>
+		<band height="32" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="0b50755a-06f2-4708-bf05-4ee9d0cd3867"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8" uuid="fd797413-a195-4319-87f4-bf28eee0a0b8"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="-1" width="40" height="13" forecolor="#FFFFFF" uuid="3d77e99e-a525-4825-97a0-636fb379a53c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="-1" width="80" height="13" forecolor="#FFFFFF" uuid="33d07938-80f4-4d39-8ce7-7910b3b5989e"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" uuid="ffae1657-09dc-43bc-bc9d-ee94ba35c0f4"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
