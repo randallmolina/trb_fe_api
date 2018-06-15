@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FacturaElectronica xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/facturaElectronica https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/facturaElectronica.xsd" xmlns="https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/facturaElectronica">
+  <Clave>50613031800010813034300100001010000001912190000009</Clave>
+  <NumeroConsecutivo>00100001010000001912</NumeroConsecutivo>
+  <FechaEmision>2018-03-13T18:15:47-06:00</FechaEmision>
+  <Emisor>
+    <Nombre>CRISTIAN LANZA CONTRERAS</Nombre>
+    <Identificacion>
+      <Tipo>01</Tipo>
+      <Numero>108130343</Numero>
+    </Identificacion>
+    <NombreComercial>ORTODENT DR. LANZA</NombreComercial>
+    <Ubicacion>
+      <Provincia>2</Provincia>
+      <Canton>01</Canton>
+      <Distrito>01</Distrito>
+      <Barrio>01</Barrio>
+      <OtrasSenas>Alajuela, 50 metros norte del  INS de Alajuela, edificio blanco a mano izquierda</OtrasSenas>
+    </Ubicacion>
+    <Telefono>
+      <CodigoPais>506</CodigoPais>
+      <NumTelefono>88396646</NumTelefono>
+    </Telefono>
+    <CorreoElectronico>orto@ortodentcr.com</CorreoElectronico>
+  </Emisor>
+  <Receptor>
+    <Nombre>MOLINA HERNANDEZ EDGAR JOSE ALONSO</Nombre>
+    <Identificacion>
+      <Tipo>01</Tipo>
+      <Numero>204600593</Numero>
+    </Identificacion>
+    <Ubicacion>
+      <Provincia>1</Provincia>
+      <Canton>01</Canton>
+      <Distrito>01</Distrito>
+      <Barrio>01</Barrio>
+      <OtrasSenas>Sin dirección</OtrasSenas>
+    </Ubicacion>
+    <Telefono>
+      <CodigoPais>506</CodigoPais>
+      <NumTelefono>83307197</NumTelefono>
+    </Telefono>
+    <CorreoElectronico>randall.molina@gmail.com</CorreoElectronico>
+  </Receptor>
+  <CondicionVenta>01</CondicionVenta>
+  <PlazoCredito />
+  <MedioPago>02</MedioPago>
+  <DetalleServicio>
+    <LineaDetalle>
+      <NumeroLinea>1</NumeroLinea>
+      <Codigo>
+        <Tipo>01</Tipo>
+        <Codigo>3</Codigo>
+      </Codigo>
+      <Cantidad>1.0000</Cantidad>
+      <UnidadMedida>Sp</UnidadMedida>
+      <Detalle>Control Prima</Detalle>
+      <PrecioUnitario>20000.0000</PrecioUnitario>
+      <MontoTotal>20000.0000</MontoTotal>
+      <MontoDescuento>0.0000</MontoDescuento>
+      <NaturalezaDescuento>0</NaturalezaDescuento>
+      <SubTotal>20000.0000</SubTotal>
+      <MontoTotalLinea>20000.0000</MontoTotalLinea>
+    </LineaDetalle>
+  </DetalleServicio>
+  <ResumenFactura>
+    <CodigoMoneda>CRC</CodigoMoneda>
+    <TipoCambio>1.0000</TipoCambio>
+    <TotalServGravados>0.0000</TotalServGravados>
+    <TotalServExentos>20000.0000</TotalServExentos>
+    <TotalMercanciasGravadas>0.0000</TotalMercanciasGravadas>
+    <TotalMercanciasExentas>0.0000</TotalMercanciasExentas>
+    <TotalGravado>0.0000</TotalGravado>
+    <TotalExento>20000.0000</TotalExento>
+    <TotalVenta>20000.0000</TotalVenta>
+    <TotalDescuentos>0.0000</TotalDescuentos>
+    <TotalVentaNeta>20000.0000</TotalVentaNeta>
+    <TotalImpuesto>0.0000</TotalImpuesto>
+    <TotalComprobante>20000.0000</TotalComprobante>
+  </ResumenFactura>
+  <Normativa>
+    <NumeroResolucion>DGT-R-48-2016</NumeroResolucion>
+    <FechaResolucion>07-10-2016 08:00:00</FechaResolucion>
+  </Normativa>
+  <Otros />
+</FacturaElectronica>
